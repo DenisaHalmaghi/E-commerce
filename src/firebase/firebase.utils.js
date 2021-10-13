@@ -1,9 +1,7 @@
-import { initializeApp } from "firebase/app"
-// import 'firebase/firestore'
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { collection, doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 
-
-
+import { initializeApp } from "firebase/app"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -19,6 +17,7 @@ const firebaseConfig = {
 initializeApp( firebaseConfig );
 
 export const auth = getAuth()
+export const db = getFirestore();
 // export const firestore = firebase.auth()
 
 const provider = new GoogleAuthProvider();
@@ -45,3 +44,23 @@ export const signInWithGoogle = () => signInWithPopup( auth, provider )
     const credential = GoogleAuthProvider.credentialFromError( error );
     // ...
   } );
+
+export const storeUserIfNotAlreadyStored = async ( user, extraInformation ) =>
+{
+  if ( !user ) return
+
+  const userRef = doc( db, "users", user.uid );
+  const docSnap = await getDoc( userRef );
+
+  if ( !docSnap.exists() )
+  {
+    await setDoc( userRef, {
+      name: user.displayName,
+      email: user.email,
+      createdAt: new Date(),
+      ...extraInformation
+    } );
+  }
+
+  return userRef
+}

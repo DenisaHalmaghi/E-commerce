@@ -1,5 +1,6 @@
-import React from "react";
 import "./form-input.styles.scss";
+
+import React from "react";
 
 export default function FormInput({ handleChange, label, ...otherProps }) {
   return (
@@ -14,7 +15,7 @@ export default function FormInput({ handleChange, label, ...otherProps }) {
           {label}
         </label>
       ) : null}
-      <input {...otherProps} onChange={handleChange} />
+      <input className="form-input" {...otherProps} onChange={handleChange} />
     </div>
   );
 }
