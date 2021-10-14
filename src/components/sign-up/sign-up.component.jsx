@@ -38,10 +38,6 @@ class SignUp extends React.Component {
         email,
         password
       );
-      console.log(
-        "🚀 ~ file: sign-up.component.jsx ~ line 37 ~ SignUp ~ handleSubmit= ~ user",
-        user
-      );
       storeUserIfNotAlreadyStored(user, { displayName });
     } catch ({ code, message }) {
       alert(message);

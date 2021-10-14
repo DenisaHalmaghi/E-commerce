@@ -36,7 +36,7 @@ export default class App extends Component
       {
         return this.setState( {
           user: null
-        }, () => console.log( this.state ) )
+        } )
       }
 
       onSnapshot( userRef, user =>
@@ -47,7 +47,7 @@ export default class App extends Component
             id: user.id,
             ...user.data()
           }
-        }, () => console.log( this.state ) )
+        } )
       } )
     } );
   }
