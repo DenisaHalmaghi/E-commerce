@@ -1,7 +1,7 @@
 import './App.css';
 
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import { auth, storeUserIfNotAlreadyStored } from "./firebase/firebase.utils.js";
 
 import Header from './components/header/header.component';
@@ -62,17 +62,20 @@ class App extends Component
         <Header />
 
         <Switch>
-          <Route exact path="/" component={ HomePage }></Route>
-          <Route path="/shop" component={ ShopPage }></Route>
-          <Route path="/signin" component={ SignInAndSignUp }></Route>
+          <Route exact path="/" component={ HomePage } />
+          <Route path="/shop" component={ ShopPage } />
+          <Route exact path="/signin" render={ () => ( this.props.signedInUser ? <Redirect to="/" /> : <SignInAndSignUp /> ) } />
         </Switch>
       </div>
     );
   }
 }
+const mapStateToProps = ( state ) => ( {
+  signedInUser: state.user.user,
+} );
 
 const mapDispatchToProps = ( dispatch ) =>
 ( {
   setCurrentUser: user => dispatch( setCurrentUser( user ) )
 } );
-export default connect( null, mapDispatchToProps )( App );
+export default connect( mapStateToProps, mapDispatchToProps )( App );
