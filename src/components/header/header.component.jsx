@@ -1,5 +1,7 @@
 import "./header.styles.scss";
 
+import CartDropdown from "../cart-dropdown/card-dropdown.component";
+import CartIcon from "../cart-icon/cart-icon.component";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/svg/logo.svg";
 import React from "react";
@@ -29,7 +31,9 @@ function Header({ signedInUser }) {
             SIGNIN
           </Link>
         )}
+        <CartIcon />
       </div>
+      <CartDropdown />
     </div>
   );
 }
